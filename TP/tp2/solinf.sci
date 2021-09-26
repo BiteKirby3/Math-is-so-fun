@@ -9,16 +9,16 @@ function [x] = solinf(L, b)
     end
     
     x = zeros(Ln,1)
+    tol = 2*10^(-16)
     
     for i = 1 : Lm
+        if(L(i,i) < tol)
+            error("Matrice non inversible")
+        end
         S = 0 
         for j = 1 : i-1
             S = S + L(i,j)*x(j)
         end
-        if(L(i,i) == 0)
-            error("L"+i+i+" = 0")
-        else
-            x(i) = (b(i) - S)/L(i,i)
-        end
+        x(i) = (b(i) - S)/L(i,i)
     end
 endfunction
